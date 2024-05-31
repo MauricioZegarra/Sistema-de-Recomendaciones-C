@@ -1,7 +1,8 @@
 #include <iostream>
 #include "AVL.h"
 #include "Usuario.h"
-
+#include "archivo.cpp"
+#include <string>
 using namespace std;
 
 void Mostrar(Usuario* &usuario, int FE)
@@ -13,7 +14,8 @@ void Mostrar(Usuario* &usuario, int FE)
 }
 
 int main()
-{
+{ 
+ /*
     AVL Arbol;
 
     Usuario *usuarios[] = {
@@ -85,6 +87,11 @@ int main()
     // Liberar memoria
     for (int i = 0; i < 11; i++)
         delete usuarios[i];
+     */
 
+
+std::string nombreArchivo = "text.txt";
+    Archivo archivo(nombreArchivo);
+    archivo.leerArchivo();
     return 0;
 }
