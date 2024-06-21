@@ -4,13 +4,13 @@
 #include "Usuario.h"
 
 class AVL;
-
+template <typename T>
 class Nodo {
-public:
-    Nodo(Usuario *usuario, Nodo *pad = NULL, Nodo *izq = NULL, Nodo *der = NULL) :
-        usuario(usuario), padre(pad), izquierdo(izq), derecho(der), FE(0) {}
 
-    Usuario *usuario;
+public:
+    Nodo(T*val, Nodo *pad = NULL, Nodo *izq = NULL, Nodo *der = NULL) : val(val), padre(pad), izquierdo(izq), derecho(der), FE(0) {}
+
+    T *val;
     int FE;
     Nodo *izquierdo;
     Nodo *derecho;
