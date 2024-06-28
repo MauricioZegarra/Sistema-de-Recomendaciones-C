@@ -7,7 +7,6 @@
 
 using namespace std;
 
-//clase de Usuarios
 class Usuario {
     unordered_map <int, double> vistas;
     unordered_map <int, double> recom;
@@ -69,7 +68,7 @@ public:
     bool operator>=(const Usuario& other) const {
         return id >= other.id;
     }
-        // Sobrecarga del operador <<
+
     friend std::ostream& operator<<(std::ostream& os, const Usuario& usuario) {
         os << "ID: " << usuario.id << ", Nombre: " << usuario.nombre;
         return os;
@@ -90,11 +89,6 @@ public:
             cout << "Pelicula ID: " << pair.first << ", Recomendación: " << pair.second << endl;
         }
     }
-
-    void printMoviesRecomend(){
-            
-    }
 };
 
 #endif // USUARIO_H
-

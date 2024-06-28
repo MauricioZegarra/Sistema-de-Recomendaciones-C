@@ -2,7 +2,6 @@
 #define ALGORITMORECOMENDACION_H
 #include "Usuario.h"
 #include "AVL.h"
-//#include "archivo.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -15,14 +14,10 @@ private:
     AVL<Usuario> avl;
 
 public:
-    AlgoritmoRecomendacion(){
-
-    };
+    AlgoritmoRecomendacion() {}
 
     void fillUsers(string filename)
     {
-
-        // Leer datos de la línea
         int userId, itemId, IdTempUser = -1;
         float rating;
         string name;
@@ -52,7 +47,10 @@ public:
                 }
                 else if (userId != IdTempUser)
                 {
-                    avl.Insertar(user);
+                    if (user != nullptr) {
+                        avl.Insertar(user);
+                        cout << "Usuario insertado: ID " << user->getID() << endl;
+                    }
                     IdTempUser = userId;
                     name = "Usuario " + to_string(userId);
                     user = new Usuario(userId, name);
@@ -74,25 +72,18 @@ public:
             {
                 user->modiVista(itemId, rating);
             }
-
-            //
         }
         if (user != nullptr)
         {
-            avl.Insertar(user); // Insertar el último usuario en el AVL
+            avl.Insertar(user);
+            cout << "Último usuario insertado: ID " << user->getID() << endl;
         }
 
         file.close();
+        cout << "Total de usuarios insertados: " << avl.NumeroNodos() << endl;
     }
-    /*
-     *LES EXPLICO EN COMO DEBEIA FUNCIONAR EL SISTEMAS DE RECOMENDACION A UN USUARIO
-     * SACAR LA DISTACNIA ECLUDIANA ENTRE LAS PELUCLAS QUE VIERON LOS OTROS USARIOS Y CON EL
-     * LUEGO MULTPLICA LAS DIATACNAS CON LOS SCORES DELAS OTRAS PEICULAS QUE NO VIO Y DE LA UN 
-     * VALOR DE RECOMENDACION.
-     * 
-    */
-    void hacerComparaciones() {
 
+    void hacerComparaciones() {
        for (int i = 1; i <= 610; i++) {
            for (int j = 1; j <= 610; j++) {
                if (i != j) {
@@ -103,6 +94,7 @@ public:
     }
 
     void comparar(Usuario *u1, Usuario *u2) {
+        if (u1 == nullptr || u2 == nullptr) return;
 
         unordered_map <int, double> v1 = u1->getVistas();
         unordered_map <int, double> v2 = u2->getVistas();
@@ -127,10 +119,9 @@ public:
                 u1->modiRecom(it2->first, it2->second * (distEu / 10)); 
             }
         }
-
     }
 
-    AVL<Usuario> getAvl() {
+    const AVL<Usuario>& getAvl() const {
         return avl;
     }
 
@@ -138,6 +129,7 @@ public:
     {
         avl.inOrden();
     }
+
     void numberOfUsers()
     {
         cout << "number of users ->" << avl.NumeroNodos() << "\n";

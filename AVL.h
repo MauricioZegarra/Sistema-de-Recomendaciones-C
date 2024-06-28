@@ -34,7 +34,6 @@ private:
 
     void Equilibrar(Nodo *nodo, int rama, bool nuevo)
     {
-
         bool salir = false;
         while (nodo && !salir)
         {
@@ -294,30 +293,28 @@ public:
     {
         Podar(raiz);
     }
-    //le quite el puntero
-    T* getRaiz(){
-        return raiz;
-    }
+
     void Insertar(T* val)
     {
         if (!raiz)
         {
-            //quite new Node(val);
-            raiz =new Nodo( val);
+            raiz = new Nodo(val);
         }
         else
         {
-            Nodo *padre;
-            Nodo *aux = raiz;
+            Nodo* padre = nullptr;
+            Nodo* aux = raiz;
             while (aux)
             {
                 padre = aux;
-                if (*val < *(aux->val))
+                if (val->getID() < aux->val->getID())
                     aux = aux->izquierdo;
-                else
+                else if (aux->val->getID() < val->getID())
                     aux = aux->derecho;
+                else
+                    return; // Evitar duplicados
             }
-            if (*val < *(padre->val))
+            if (val->getID() < padre->val->getID())
                 padre->izquierdo = new Nodo(val, padre);
             else
                 padre->derecho = new Nodo(val, padre);
@@ -419,82 +416,73 @@ public:
             Equilibrar(nodoEquilibrar, lado, false);
         contador--;
     }
-    T *Buscar(const int id)
+    T* Buscar(const int id) const
     {
-        Nodo *aux = raiz;
-        while (aux)
-        {
-            if (id == (aux->val->getID()))
-                return aux->val;
-            else if (id < (aux->val->getID()))
-                aux = aux->izquierdo;
-            else
-                aux = aux->derecho;
-        }
-        return NULL;
+    Nodo *aux = raiz;
+    while (aux)
+    {
+        if (id == aux->val->getID())
+            return aux->val;
+        else if (id < aux->val->getID())
+            aux = aux->izquierdo;
+        else
+            aux = aux->derecho;
+    }
+    return NULL;
     }
     
     
     bool Vacio(Nodo *r)
     {
         return r == NULL; 
-   
-   
     }
 
+    bool EsHoja(Nodo *r)
+    {
+        return !r->derecho && !r->izquierdo;
+    }
 
-
- bool  EsHoja(Nodo *r)
+    int NumeroNodos() const
 {
-    return !r->derecho && !r->izquierdo;
-}
-
-const int NumeroNodos()
-{
-    contador = 0;
-    auxContador(raiz);
     return contador;
 }
-const int AlturaArbol()
-{
-    altura = 0;
-    auxAltura(raiz, 0);
-    return altura;
-}
-int Altura(const int id)
-{
-    Nodo *nodo = raiz;
-    int alturaNodo = 0;
-    while (nodo)
+    const int AlturaArbol()
     {
-        if (id == *(nodo->val))
-            return alturaNodo;
-        else if (id < *(nodo->val))
-            nodo = nodo->izquierdo;
-        else
-            nodo = nodo->derecho;
-        alturaNodo++;
+        altura = 0;
+        auxAltura(raiz, 0);
+        return altura;
     }
-    return -1; // No se encontró el nodo
-}
+    int Altura(const int id)
+    {
+        Nodo *nodo = raiz;
+        int alturaNodo = 0;
+        while (nodo)
+        {
+            if (id == *(nodo->val))
+                return alturaNodo;
+            else if (id < *(nodo->val))
+                nodo = nodo->izquierdo;
+            else
+                nodo = nodo->derecho;
+            alturaNodo++;
+        }
+        return -1; // No se encontró el nodo
+    }
 
-T *&ValorActual()
-{
-    return actual->val;
-}
-void Raiz()
-{
-    actual = raiz;
-}
+    T *&ValorActual()
+    {
+        return actual->val;
+    }
+    void Raiz()
+    {
+        actual = raiz;
+    }
 
-
-void inOrden()
-{
-    inOrden(raiz);
-    std::cout << "\n\n";
-}
-
+    void inOrden()
+    {
+        inOrden(raiz);
+        std::cout << "\n\n";
+    }
 };
-
 
 #endif // AVL_H

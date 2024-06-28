@@ -1,19 +1,16 @@
 #include <iostream>
-#include "AVL.h"
+
 #include "Usuario.h"
-#include "archivo.h"
+
 #include <string>
 #include "AlgoritmoRecomendacion.h"
 using namespace std;
 
-
-
 int main()
 { 
- 
-    AlgoritmoRecomendacion algo=AlgoritmoRecomendacion();
+    AlgoritmoRecomendacion algo;
     algo.fillUsers("ratings_s.csv");
-    algo.numberOfUsers();
+    cout << "Número total de usuarios: " << algo.getAvl().NumeroNodos() << endl;
     algo.hacerComparaciones();
     
     int id;
@@ -22,14 +19,18 @@ int main()
     do {
         cout << "Id del usuario que quiere recibir recomendaciones: ";
         cin >> id;
-        algo.getAvl().Buscar(id)->toString(); 
+        Usuario* user = algo.getAvl().Buscar(id);
+        if (user) {
+            user->toString();
+        } else {
+            cout << "Usuario no encontrado. ID buscado: " << id << endl;
+            cout << "Número total de usuarios en el árbol: " << algo.getAvl().NumeroNodos() << endl;
+        }
         cout << endl;
         cout << "\n¿Seguir? (S/N) -> ";
         cin >> conf;
         conf = toupper(conf);
-    }
-    while (conf == 'S');
-    
+    } while (conf == 'S');
 
     return 0;
 }
