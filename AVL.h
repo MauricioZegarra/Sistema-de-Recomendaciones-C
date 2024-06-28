@@ -1,22 +1,10 @@
 #ifndef AVL_H
 #define AVL_H
 #include<iostream>
-
+#include "Usuario.h"
 #include <cmath>
 using namespace std;
-/*
-template <typename T>
-   class Nodo
-    {
-    public:
-        T *val;
-        Nodo *izquierdo;
-        Nodo *derecho;
-        Nodo *padre;
-        int fe; // factor de equilibrio
-      
-        Nodo(T *v, Nodo *p = NULL) : val(v), izquierdo(NULL), derecho(NULL), padre(p), fe(0) {}
-    };*/
+
 template <typename T>
 class AVL
 {
@@ -436,9 +424,9 @@ public:
         Nodo *aux = raiz;
         while (aux)
         {
-            if (id == *(aux->val))
+            if (id == (aux->val->getID()))
                 return aux->val;
-            else if (id < *(aux->val))
+            else if (id < (aux->val->getID()))
                 aux = aux->izquierdo;
             else
                 aux = aux->derecho;

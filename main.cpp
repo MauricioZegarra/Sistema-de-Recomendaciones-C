@@ -11,26 +11,24 @@ using namespace std;
 int main()
 { 
  
-   
-   /* string nombreArchivo = "ratings_s.csv";
-
-    Archivo archivo(nombreArchivo);
-    archivo.leerArchivo();
-    Usuario * a = new Usuario(1,"carlos");
-     Usuario *b  = new Usuario (2,"juan");
-      Usuario *c= new Usuario (3,"pedro");
-
-    AVL<Usuario> arbol;
-    
-    arbol.Insertar(a);
-    arbol.Insertar(b);
-    arbol.Insertar(c);
-    arbol.inOrden();*/
     AlgoritmoRecomendacion algo=AlgoritmoRecomendacion();
     algo.fillUsers("ratings_s.csv");
-   // algo.printAllDataUser();
     algo.numberOfUsers();
-    algo.currentUser();
+    algo.hacerComparaciones();
+    
+    int id;
+    char conf;
+
+    do {
+        cout << "Id del usuario que quiere recibir recomendaciones: ";
+        cin >> id;
+        algo.getAvl().Buscar(id)->toString(); 
+        cout << endl;
+        cout << "\n¿Seguir? (S/N) -> ";
+        cin >> conf;
+        conf = toupper(conf);
+    }
+    while (conf == 'S');
     
 
     return 0;

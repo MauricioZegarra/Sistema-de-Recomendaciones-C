@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <cmath>
 
 class AlgoritmoRecomendacion
 {
@@ -72,7 +73,7 @@ public:
             }
             if (userId == IdTempUser && user != nullptr)
             {
-                user->addVista(itemId, rating);
+                user->modiVista(itemId, rating);
             }
 
             //
@@ -91,19 +92,48 @@ public:
      * VALOR DE RECOMENDACION.
      * 
     */
-    void recomedMoviesToOneUser(int id){
+    void hacerComparaciones() {
 
-       // Usuario *us=avl.Buscar(id);
-
-     // Nodo *root = avl.getRaiz();
-      
-      //Usuario *
-
-    }
-    void currentUser(){
-      
+       for (int i = 1; i <= 610; i++) {
+           for (int j = 1; j <= 610; j++) {
+               if (i != j) {
+                   comparar(avl.Buscar(i), avl.Buscar(j));
+               }
+           }
+        }
     }
 
+    void comparar(Usuario *u1, Usuario *u2) {
+
+        unordered_map <int, double> v1 = u1->getVistas();
+        unordered_map <int, double> v2 = u2->getVistas();
+
+        double suma = 0;
+
+        for (auto it1 = v1.begin(); it1 != v1.end(); ++it1) {
+            auto it2 = v2.find(it1->first);
+            if (it2 != v2.end()) {
+                suma += (it1->second - it2->second) * (it1->second - it2->second);
+            }
+            else {
+                suma += (it1->second) * (it1->second);
+            }
+        }
+    
+        double distEu = sqrt(suma);
+        distEu = round(distEu * 10) / 10;
+    
+        for (auto it2 = v2.begin(); it2 != v2.end(); ++it2) {
+            if (v1.find(it2->first) == v1.end()) {
+                u1->modiRecom(it2->first, it2->second * (distEu / 10)); 
+            }
+        }
+
+    }
+
+    AVL<Usuario> getAvl() {
+        return avl;
+    }
 
     void printAllDataUser()
     {
