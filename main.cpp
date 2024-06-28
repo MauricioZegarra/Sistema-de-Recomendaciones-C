@@ -1,37 +1,36 @@
 #include <iostream>
-#include "AVL.h"
+
 #include "Usuario.h"
-#include "archivo.h"
+
 #include <string>
 #include "AlgoritmoRecomendacion.h"
 using namespace std;
 
-
-
 int main()
 { 
- 
-   
-   /* string nombreArchivo = "ratings_s.csv";
-
-    Archivo archivo(nombreArchivo);
-    archivo.leerArchivo();
-    Usuario * a = new Usuario(1,"carlos");
-     Usuario *b  = new Usuario (2,"juan");
-      Usuario *c= new Usuario (3,"pedro");
-
-    AVL<Usuario> arbol;
-    
-    arbol.Insertar(a);
-    arbol.Insertar(b);
-    arbol.Insertar(c);
-    arbol.inOrden();*/
-    AlgoritmoRecomendacion algo=AlgoritmoRecomendacion();
+    AlgoritmoRecomendacion algo;
     algo.fillUsers("ratings_s.csv");
-   // algo.printAllDataUser();
-    algo.numberOfUsers();
-    algo.currentUser();
+    cout << "Número total de usuarios: " << algo.getAvl().NumeroNodos() << endl;
+    algo.hacerComparaciones();
     
+    int id;
+    char conf;
+
+    do {
+        cout << "Id del usuario que quiere recibir recomendaciones: ";
+        cin >> id;
+        Usuario* user = algo.getAvl().Buscar(id);
+        if (user) {
+            user->toString();
+        } else {
+            cout << "Usuario no encontrado. ID buscado: " << id << endl;
+            cout << "Número total de usuarios en el árbol: " << algo.getAvl().NumeroNodos() << endl;
+        }
+        cout << endl;
+        cout << "\n¿Seguir? (S/N) -> ";
+        cin >> conf;
+        conf = toupper(conf);
+    } while (conf == 'S');
 
     return 0;
 }
