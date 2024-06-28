@@ -1,9 +1,8 @@
 #ifndef ALGORITMORECOMENDACION_H
 #define ALGORITMORECOMENDACION_H
-#include "pelicula.h"
 #include "Usuario.h"
 #include "AVL.h"
-#include "archivo.h"
+//#include "archivo.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>

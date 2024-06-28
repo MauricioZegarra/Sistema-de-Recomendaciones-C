@@ -1,43 +1,11 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include <vector>
 #include <iostream>
 #include <string>
 #include <unordered_map>
-#include "pelicula.h"
 
 using namespace std;
-
-// registro de peliculas
-class PeliculaRegistro
-{
-private:
-  int id;
-  float voto;
-   
-
-public:
-    PeliculaRegistro(int id, float v):id(id),voto(voto){}
-
-  void setIdPelicula( int d){
-    id=d;
-  }
-  
- void setVotoPelicula(double v){
-    voto = v;
- }
-
-  int getIdPelicula(){
-    return id;
-
-  }
-
-  float getVotoPelicula(){
-    return voto;
-  }
-
-};
 
 //clase de Usuarios
 class Usuario {
