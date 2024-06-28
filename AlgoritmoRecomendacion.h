@@ -72,8 +72,7 @@ public:
             }
             if (userId == IdTempUser && user != nullptr)
             {
-                PeliculaRegistro p = PeliculaRegistro(itemId, rating);
-                user->addPeliculaPuntuacion(p);
+                user->addVista(itemId, rating);
             }
 
             //
@@ -94,7 +93,7 @@ public:
     */
     void recomedMoviesToOneUser(int id){
 
-     //Usuario *us=avl.Buscar(id);
+       // Usuario *us=avl.Buscar(id);
 
      // Nodo *root = avl.getRaiz();
       

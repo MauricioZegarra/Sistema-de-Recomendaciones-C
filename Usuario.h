@@ -4,7 +4,9 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include "pelicula.h"
+
 using namespace std;
 
 // registro de peliculas
@@ -39,14 +41,22 @@ public:
 
 //clase de Usuarios
 class Usuario {
-    vector<PeliculaRegistro> puntuaciones;
+    unordered_map <int, double> vistas;
+    unordered_map <int, double> recom;
     string nombre;
-    vector<Pelicula> recomendaciones;
     int id;
 
 public:
     Usuario() : id(0), nombre("") {}
     Usuario(int id, string n) : id(id), nombre(n) {}
+
+    void addVista(int id, double punt) {
+        vistas[id] = punt;
+    }
+
+    void addRecom(int id, double punt) {
+        recom[id] = punt;
+    }
 
     void setID(int id) {
         this->id = id;
@@ -64,14 +74,6 @@ public:
         return nombre;
     }
 
-    void setVectorPeliculas( vector<PeliculaRegistro>array) {
-        puntuaciones = array;
-    }
-
-    vector<PeliculaRegistro> getVectorPeliculas() const {
-        return puntuaciones;
-    }
-
     bool operator<(const Usuario& other) const {
         return id < other.id;
     }
@@ -87,27 +89,12 @@ public:
     bool operator>=(const Usuario& other) const {
         return id >= other.id;
     }
-    void addPeliculaPuntuacion(PeliculaRegistro p){
-        puntuaciones.push_back(p);
-    }
-
-    void addPeliculaRecomendada(Pelicula r){
-        recomendaciones.push_back(r);
-    }
-
-    vector<Pelicula> getRecomendadas(){
-        return recomendaciones;
-    }
         // Sobrecarga del operador <<
     friend std::ostream& operator<<(std::ostream& os, const Usuario& usuario) {
         os << "ID: " << usuario.id << ", Nombre: " << usuario.nombre;
         return os;
     }
     void printMoviesRecomend(){
-        for(size_t i=0;i<recomendaciones.size();i++){
-            cout<<"id->"<<recomendaciones[i].getIdPelicula()<<"pelicula"<<"\n";
-        }
-        cout<<"------------------------------------------------------------\n";
             
     }
 };
